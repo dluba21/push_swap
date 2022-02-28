@@ -1,7 +1,7 @@
 #include "push_swap.h"
 
 
-t_node *create_elem(long value)
+t_node *create_elem(int value)
 {
 	t_node	*new_elem;
 
@@ -11,17 +11,6 @@ t_node *create_elem(long value)
 	new_elem->value = value;
 	new_elem->next = NULL;
 	return (new_elem);
-}
-
-void add_front_list(t_list *list, long value)
-{
-	t_node *temp;
-
-	if (!list)
-		return ;
-	temp = create_elem(value);
-	temp->next = list->head;
-	list->head = temp;
 }
 
 int list_length(t_list *list)
@@ -42,7 +31,60 @@ int list_length(t_list *list)
 	
 }
 
+t_node *get_last_elem(t_list *list)
+{
+	t_node *temp;
 
+	if (!list || !list->head)
+		return (NULL);
+	temp = list->head;
+	while (temp->next)
+		temp = temp->next;
+	return (temp);
+}
+
+void add_front_list(t_list *list, t_node *elem, t_errors *error)
+{
+	if (!list || !elem)
+	{
+		error->list_create_flag = 1;
+		return ;
+	}
+	elem->next = list->head;
+	list->head = elem;
+}
+
+
+void add_back_list(t_list *list, t_node *elem, t_errors *error)
+{
+	t_node	*temp;
+	
+	if (!list || !elem)
+	{
+		error->list_create_flag = 1;
+		return ;
+	}
+	temp = get_last_elem(list);
+	if (!temp)
+	{
+		list->head = elem;
+		return ;
+	}
+	temp->next = elem;
+}
+
+void print_list(t_list *list)
+{
+	t_node *temp;
+
+	temp = list->head;
+	while (temp)
+	{
+		printf("%d\n", temp->value);
+		temp = temp->next;
+	}
+	
+}
 
 t_list *create_list(int size, char **argv, t_errors *error)
 {
@@ -55,57 +97,24 @@ t_list *create_list(int size, char **argv, t_errors *error)
 	list->size = size;
 	temp = list->head;
 	while (i < list->size)
-//		temp = create_elem(ft_atoi(argv[i++], error));
-	add_front_list(list, ft_atoi(argv[i++], error));
+		add_back_list(list, create_elem(ft_atoi(argv[i++], error)), error);
 	return (list);
 }
 
-int main(int argc, char **argv)
+int is_sort(t_list *list)
 {
-	t_errors error;
-	error.atoi_flag = 0;
-	t_list *list;
-	
-//	printf("%d", argc);
-	
-	if (argc < 2)
+	t_node	*temp;
+
+	if (!list || !list->head)
 		return (0);
-	list = create_list(argc, argv, &error);
-	if (error.atoi_flag == 1)
-		return (0);
-//	xt);
-		printf("\n\n%d\n", list->head->value);
-//		printf("%p\n", list->head->next->next);
-//		add_front_list(list, 1);
-//		printf("\n\n%p\n", list->head->ne
-	return (0);
+	if (list->size == 1)
+		return (1);
+	temp = list->head;
+	while (temp->next)
+	{
+		if (temp->value > temp->next->value)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
 }
-
-
-
-
-
-
-//int main()
-//{
-//	t_list *list;
-//	list = (t_list *)malloc(sizeof(t_list));
-////	t_stack *temp = *head;
-////	temp = create_elem(-1);
-//	add_front_list(list, 1);
-////	printf("\n\n%p\n", list->head->next);
-////	add_front_list(list, 1);
-////	printf("\n\n%p\n", list->head->next);
-////	printf("%p\n", list->head->next->next);
-////	add_front_list(list, 1);
-////	printf("\n\n%p\n", list->head->next);
-////	printf("%p\n", list->head->next->next);
-////	printf("%p\n", list->head->next->next->next);
-////	add_front_list(list, 1);
-////	add_front_list(list, 1);
-////	list = create_list(7);
-////	printf("%p\n", *head->next);
-//	
-//	printf("%d", list_length(list));
-//	return (0);
-//}
