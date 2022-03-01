@@ -10,52 +10,59 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-static void atoi_checker(char *str, int sign)
+static int	sign_checker(char c)
 {
-	long	mod;
-	
-	mod = 0;
-	if (*str < '0' || *str > '9')
-	{
-		printf("atoi_error: not a letter\n");
-		exit (0);
-	}
-	while (*str && *str >= '0' && *str <= '9')
-	{
-		if (mod * sign > 2147483647 || mod * sign < -2147483648)
-		{
-			printf("overflow\n");
-			exit (0);
-		}
-		mod = mod * 10 + *str++ - '0';
-	}
+	if (c == '-')
+		return (-1);
+	return (1);
 }
 
-int	ft_atoi_ps(char *str)
+static int	long_checker(const char *str, int i, int sign)
 {
-	int	mod;
-	int	sign;
+	int			len;
+	long int	mod;
 
-	sign = 1;
 	mod = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '-')
+	len = 0;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		sign = -1;
-		str++;
+		if (sign == -1 && ((mod == 922337203685477580 && \
+		(str[i] - '0' >= 8)) || len >= 19))
+			return (0);
+		if (sign == 1 && ((mod == 922337203685477580 \
+		&& (str[i] - '0' >= 7)) || len >= 19))
+			return (-1);
+		mod = mod * 10 + str[i++] - '0';
+		len++;
 	}
-	atoi_checker(str, sign);
-	while (*str && *str >= '0' && *str <= '9')
-		mod = mod * 10 + *str++ - '0';
-//	printf("lol");
+	return (1);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	j;
+	int	sign;
+	int	mod;
+
+	i = 0;
+	j = 0;
+	mod = 0;
+	sign = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	while (str[i] == '+' || str[i] == '-')
+	{
+		if (j > 0)
+			return (0);
+		sign = sign_checker(str[i++]);
+		j++;
+	}
+	if (long_checker(str, i, sign) < 1)
+		return (long_checker(str, i, sign));
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
+		mod = mod * 10 + str[i++] - '0';
 	return (mod * sign);
 }
-
-//int main()
-//{
-//	t_errors error;
-//	printf("%d", ft_atoi("   a", &error));
-//}

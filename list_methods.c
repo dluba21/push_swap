@@ -43,26 +43,26 @@ t_node *get_last_elem(t_list *list)
 	return (temp);
 }
 
-void add_front_list(t_list *list, t_node *elem, t_errors *error)
+void add_front_list(t_list *list, t_node *elem)
 {
 	if (!list || !elem)
 	{
-		error->list_create_flag = 1;
-		return ;
+		printf("add_front_lst error");
+		exit(0);
 	}
 	elem->next = list->head;
 	list->head = elem;
 }
 
 
-void add_back_list(t_list *list, t_node *elem, t_errors *error)
+void add_back_list(t_list *list, t_node *elem)
 {
 	t_node	*temp;
 	
 	if (!list || !elem)
 	{
-		error->list_create_flag = 1;
-		return ;
+		printf("add_back_lst error\n");
+		exit(0);
 	}
 	temp = get_last_elem(list);
 	if (!temp)
@@ -86,20 +86,20 @@ void print_list(t_list *list)
 	
 }
 
-t_list *create_list(int size, char **argv, t_errors *error)
-{
-	t_node	*temp;
-	t_list	*list;
-	int		i;
-
-	i = 1;
-	list = (t_list *)malloc(sizeof(t_list));
-	list->size = size;
-	temp = list->head;
-	while (i < list->size)
-		add_back_list(list, create_elem(ft_atoi(argv[i++], error)), error);
-	return (list);
-}
+//t_list *create_list(int size, char **argv)
+//{
+//	t_node	*temp;
+//	t_list	*list;
+//	int		i;
+//
+//	i = 1;
+//	list = (t_list *)malloc(sizeof(t_list));
+//	list->size = size;
+//	temp = list->head;
+//	while (i < list->size)
+//		add_back_list(list, create_elem(ft_atoi(argv[i++], error)), error);
+//	return (list);
+//}
 
 int is_sort(t_list *list)
 {

@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <time.h>
 
 void swap_one(t_list *list) //sa sb
 {
@@ -100,32 +99,3 @@ void rev_rotate_both(t_list *list_1, t_list *list_2) //rrr
 	rev_rotate_one(list_2);
 }
 
-int main(int argc, char **argv)
-{
-	t_errors error;
-	error.atoi_flag = 0;
-	t_list *list;
-	t_node *temp;
-	
-	clock_t start, end;
-	
-	if (argc < 2)
-	{
-		printf("\ntoo few arguments\n");
-		return (0);
-	}
-	list = create_list(argc, argv, &error);
-	if (error.atoi_flag == 1 || error.list_create_flag == 1)
-	{
-		printf("\natoi error\n");
-		return (0);
-	}
-//	swap_ab(list);
-	print_list(list);
-	printf("\n");
-	rev_rotate_one(list);
-	print_list(list);
-//	printf("[%d]", ((end - start)));
-//	printf("\n{%d}", is_sort(list));
-	return (0);
-}
