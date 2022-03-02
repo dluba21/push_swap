@@ -8,12 +8,12 @@ void swap_one(t_list *list) //sa sb
 	if (!list || !list->head)
 	{
 		printf("list error(swap)\n");
-		return ;
+		exit (0);
 	}
 	if (!list->head->next)
 	{
 		printf("here is just one elem(swap)\n");
-		return ;
+		exit (0);
 	}
 
 	temp_1 = list->head->next;
@@ -97,5 +97,6 @@ void rev_rotate_both(t_list *list_1, t_list *list_2) //rrr
 {
 	rev_rotate_one(list_1);
 	rev_rotate_one(list_2);
+	
 }
 

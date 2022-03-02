@@ -6,18 +6,6 @@ void print_error(void)
 	exit(0);
 }
 
-
-typedef struct	s_parse
-{
-	char 	**big_str;
-	int		*big_array;
-	int		size_array;
-	
-	int		*ind_array;
-	int		*sort_ind_array;
-	
-}				t_parse;
-
 int word_counter(char **big_str)
 {
 	int	i;
@@ -29,33 +17,20 @@ int word_counter(char **big_str)
 		i++;
 	return (i);
 }
-void print_big_array(int *array, int size)
+
+void	swap_sort(int *a, int *b)
 {
-	if (!array)
-	{
-		printf("lol not print\n");
-		exit(0);
-	}
-	printf("\n");
-	for (int i; i < size; i++)
-		printf("%d ", array[i]);
-	printf("\n");
-//	printf("ok\n");
+	int	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
-void print_big_str(char **big_str)
-{
-	printf("\n");
-	while(*big_str)
-	{
-		printf("%s ", *big_str++);
-	}
-	printf("\n");
-}
-
-void indices_array_creator(int *indices_array, int size_array)
+int *indices_array_creator(int size_array)
 {
 	int	i;
+	int *indices_array;
 
 	i = 0;
 	indices_array = (int *)malloc(sizeof(int) * size_array);
@@ -69,40 +44,80 @@ void indices_array_creator(int *indices_array, int size_array)
 		indices_array[i] = i;
 		i++;
 	}
+	return (indices_array);
 }
 
-void quick_sort_array(t_parse *parse) //replace bubble_sort to quick_sort
+void dublicate_check(t_parse *parse)
 {
-	int	temp;
+	int	i;
+	int counter;
+	int c;
+
+	i = 0;
+	counter = -1;
+	c = parse->big_array[i];
+	while (i < parse->size_array)
+	{
+		if (parse->big_array[i] == c)
+			counter++;
+		else
+		{
+			c = parse->big_array[i];
+			counter = 0;
+		}
+		if (counter > 0)
+		{
+			printf("error: dublicates are here\n");
+			exit(0);
+		}
+		i++;
+	}
+}
+
+
+void quick_sort_array(t_parse *parse, int ind_array_flag) //replace bubble_sort to quick_sort
+{
 	int	i;
 	int	j;
-	int *indices_array;
+	int *first_array;
+	int *second_array;
 
-	i = 1;
-//	if (ind_array_flag == 1)
-		indices_array = parse->ind_array;
-	indices_array_creator(indices_array, parse->size_array);
+	if (ind_array_flag == 0)
+		first_array = parse->big_array;
+	if (ind_array_flag == 1)
+		first_array = parse->ind_array;
+	second_array = indices_array_creator(parse->size_array);
+	i = 0;
+	//	for (int k = 0; k < parse->size_array; k++) //show arrays before
+	//		printf("[%d ", first_array[k]);
+	//	printf("\n");
+	//	for (int k = 0; k < parse->size_array; k++)
+	//		printf("[%d ", second_array[k]);
+	//		printf("\n");
 	while (i < parse->size_array)
 	{
 		j = 0;
-		while (j < parse->size_array - i)
+		while (j < parse->size_array - i - 1)
 		{
-			if (parse->big_array[j] > parse->big_array[j + 1]) //nuzhno urezat'
+			if (first_array[j] > first_array[j + 1]) //nuzhno urezat'
 			{
-				temp = parse->big_array[j];
-				parse->big_array[j] = parse->big_array[j + 1];
-				parse->big_array[j + 1] = temp;
-
-//				temp = indices_array[j];
-//				indices_array[j] = indices_array[j + 1];
-//				indices_array[j + 1] = temp;
+				swap_sort(&first_array[j], &first_array[j + 1]);
+				swap_sort(&second_array[j], &second_array[j + 1]);
 			}
-//			printf("i = %d\tj = %d\n", i, j);
 			j++;
 		}
-//		printf("\n");
 		i++;
 	}
+	if (ind_array_flag == 0)
+		parse->ind_array = second_array;
+	if (ind_array_flag == 1)
+		parse->sort_ind_array = second_array;
+//		for (int k = 0; k < parse->size_array; k++) //show arrays before
+//			printf("[%d ", first_array[k]);
+//		printf("\n");
+//		for (int k = 0; k < parse->size_array; k++)
+//			printf("[%d ", second_array[k]);
+//			printf("\n");
 }
 
 void big_array_creator(t_parse *parse)
@@ -118,12 +133,10 @@ void big_array_creator(t_parse *parse)
 		parse->big_array[i] = ft_atoi_ps(parse->big_str[i]);
 		i++;
 	}
-	print_big_array(parse->big_array, parse->size_array);
-	print_big_array(parse->big_array, parse->size_array);
-	quick_sort_array(parse);
-//	printf("\n\n\n{{\n\n");
-	print_big_array(parse->big_array, parse->size_array);
-//	dublicate_check(parse->size_array);
+	quick_sort_array(parse, 0); // flag = 0 is for initilizing first array; flag = 1 is for the second step and init second ind_arr;
+	dublicate_check(parse); //nado free massive moduley i perviy massive indexov
+	quick_sort_array(parse, 1); //second array of indices that will be in list,(stoit li dobavlyat '1', chtobi s nulya nachalo bilo?)
+	
 }
 
 void num_array_dealer(int argc, char **argv, t_parse *parse)
@@ -142,44 +155,5 @@ void num_array_dealer(int argc, char **argv, t_parse *parse)
 	parse->big_str = ft_split(long_str, ' ');
 	parse->size_array = word_counter(parse->big_str);
 	big_array_creator(parse);
-//	quick_sort(parse);
-//	dublicate_checker
-////	print_big_array(parse->big_array, parse->size_array);
-//
-	
 }
-//void norm_argv(int *argc, char **argv)
-//{
-//
-//}
-//
-//t_list *parsing(int argc, char **argv)
-//{
 
-//}
-int main(int argc, char **argv)
-{
-	t_list *list;
-	t_node *temp;
-	t_parse	parse;
-
-	
-	if (argc < 2)
-	{
-		printf("\ntoo few arguments\n");
-		return (0);
-	}
-//	printf("lol");
-	num_array_dealer(argc, argv, &parse);
-		
-	
-	
-//	swap_ab(list);
-//	print_list(list);
-//	printf("\n");
-//	rev_rotate_one(list);
-//	print_list(list);
-//	printf("[%d]", ((end - start)));
-//	printf("\n{%d}", is_sort(list));
-	return (0);
-}

@@ -86,20 +86,34 @@ void print_list(t_list *list)
 	
 }
 
-//t_list *create_list(int size, char **argv)
-//{
-//	t_node	*temp;
-//	t_list	*list;
-//	int		i;
-//
-//	i = 1;
-//	list = (t_list *)malloc(sizeof(t_list));
-//	list->size = size;
-//	temp = list->head;
-//	while (i < list->size)
-//		add_back_list(list, create_elem(ft_atoi(argv[i++], error)), error);
-//	return (list);
-//}
+t_list *list_init(int size)
+{
+	t_list	*list;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	if (!list)
+	{
+		printf("init_lst error: malloc\n");
+		exit(0);
+	}
+	list->head = NULL;
+	list->size = size;
+	return (list);
+}
+
+t_list *create_list_from_argv(int size, int *sort_ind_array)
+{
+	t_node	*temp;
+	t_list	*list;
+	int		i;
+
+	i = 0;
+	list = list_init(size);
+	temp = list->head;
+	while (i < list->size)
+		add_back_list(list, create_elem(sort_ind_array[i++]));
+	return (list);
+}
 
 int is_sort(t_list *list)
 {
