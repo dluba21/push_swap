@@ -9,7 +9,7 @@
 typedef struct s_node
 {
 	struct s_node	*next;
-	
+	int		flag;
 	int		value;
 }				t_node;
 
@@ -46,12 +46,30 @@ t_list *list_init(int size);
 int is_sort(t_list *list);
 
 void swap_one(t_list *list);
-void swap_both(t_list *list_1, t_list *list_2);
 void push(t_list *list_src, t_list *list_dest);
 void rotate_one(t_list *list);
-void rotate_both(t_list *list_1, t_list *list_2);
-void rev_rotate_one(t_list *list); //ra rb
-void rev_rotate_both(t_list *list_1, t_list *list_2); //rrr
+void rev_rotate_one(t_list *list);
+
+//void sa(t_list *list);
+//void sb(t_list *list);
+//void ss(t_list *list_1, t_list *list_2);
+//void pa(t_list *list_a, t_list *list_b);
+//void pb(t_list *list_a, t_list *list_b);
+//void ra(t_list *list);
+//void rb(t_list *list);
+//void rr(t_list *list_a, t_list *list_b);
+//void rra(t_list *list);
+//void rrb(t_list *list);
+//void rrr(t_list *list_a, t_list *list_b);
+
+void sa_sb(t_list *list, int stack_flag);
+void ss(t_list *list_1, t_list *list_2);
+void pa_pb(t_list *list_a, t_list *list_b, int stack_flag);
+void ra_rb(t_list *list, int stack_flag);
+void rr(t_list *list_a, t_list *list_b);
+void rra_rrb(t_list *list, int stack_flag);
+void rrr(t_list *list_a, t_list *list_b);
+
 
 int	ft_atoi_ps(char *str);
 void print_error(void);

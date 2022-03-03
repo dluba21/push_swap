@@ -23,12 +23,6 @@ void swap_one(t_list *list) //sa sb
 	list->head = temp_1;
 }
 
-void swap_both(t_list *list_1, t_list *list_2) //ss
-{
-	swap_one(list_1);
-	swap_one(list_2);
-}
-
 void push(t_list *list_src, t_list *list_dest) //pa pb
 {
 	t_node	*temp_1;
@@ -63,26 +57,20 @@ void rotate_one(t_list *list)
 	list->head = temp;
 }
 
-void rotate_both(t_list *list_1, t_list *list_2) //rr
-{
-	rotate_one(list_1);
-	rotate_one(list_2);
-}
-
-void rev_rotate_one(t_list *list) //ra rb
+void rev_rotate_one(t_list *list)
 {
 	t_node	*temp;
 	t_node	*elem;
 	int		i;
 
-	i = 2;
+	i = 1; // '1' tak kak v nachale mi nahodimsya uzhe v headx
 	if (!list || !list->head || !list->head->next || !list->size)
 	{
 		printf("list error(rotate)\n");
 		return ;
 	}
 	elem = list->head;
-	while (i < list->size - 1)
+	while (i < list->size - 1) // '-1' tak kak predposledniy element nuzhen
 	{
 		elem = elem->next;
 		i++;
@@ -93,10 +81,68 @@ void rev_rotate_one(t_list *list) //ra rb
 	list->head = temp;
 }
 
-void rev_rotate_both(t_list *list_1, t_list *list_2) //rrr
+
+
+void sa_sb(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 {
-	rev_rotate_one(list_1);
-	rev_rotate_one(list_2);
-	
+	swap_one(list);
+	if (stack_flag == 1)
+		printf("sa\n");
+	else
+		printf("sb\n");
 }
 
+
+void ss(t_list *list_1, t_list *list_2)
+{
+	swap_one(list_1);
+	swap_one(list_2);
+	printf("ss\n");
+}
+
+void pa_pb(t_list *list_a, t_list *list_b, int stack_flag)
+{
+	push(list_a, list_b);
+	if (stack_flag == 1)
+	{
+		push(list_b, list_a);
+		printf("pa\n");
+	}
+	else
+	{
+		push(list_a, list_b);
+		printf("pb\n");
+	}
+}
+
+void ra_rb(t_list *list, int stack_flag)
+{
+	rotate_one(list);
+	if (stack_flag == 1)
+		printf("ra\n");
+	else
+		printf("rb\n");
+}
+
+void rr(t_list *list_a, t_list *list_b)
+{
+	rotate_one(list_a);
+	rotate_one(list_b);
+	printf("rr\n");
+}
+
+void rra_rrb(t_list *list, int stack_flag)
+{
+	rev_rotate_one(list);
+	if (stack_flag == 1)
+		printf("rra\n");
+	else
+		printf("rrb\n");
+}
+
+void rrr(t_list *list_a, t_list *list_b)
+{
+	rev_rotate_one(list_a);
+	rev_rotate_one(list_b);
+	printf("rrr\n");
+}

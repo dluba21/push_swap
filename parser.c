@@ -119,6 +119,19 @@ void quick_sort_array(t_parse *parse, int ind_array_flag) //replace bubble_sort 
 //			printf("[%d ", second_array[k]);
 //			printf("\n");
 }
+void is_sorted_at_start(int *array, int size)
+{
+	int	i;
+
+	while (i < size - 1)
+	{
+		if (array[i] > array[i + 1])
+			return ;
+		i++;
+	}
+	printf("array is sorted at start\n");
+	exit(0);
+}
 
 void big_array_creator(t_parse *parse)
 {
@@ -133,6 +146,7 @@ void big_array_creator(t_parse *parse)
 		parse->big_array[i] = ft_atoi_ps(parse->big_str[i]);
 		i++;
 	}
+//	is_sorted_at_start(parse->big_array, parse->size_array); //!!!vkluchit' potom!!!!
 	quick_sort_array(parse, 0); // flag = 0 is for initilizing first array; flag = 1 is for the second step and init second ind_arr;
 	dublicate_check(parse); //nado free massive moduley i perviy massive indexov
 	quick_sort_array(parse, 1); //second array of indices that will be in list,(stoit li dobavlyat '1', chtobi s nulya nachalo bilo?)
