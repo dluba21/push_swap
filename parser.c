@@ -41,7 +41,7 @@ int *indices_array_creator(int size_array)
 	}
 	while (i < size_array)
 	{
-		indices_array[i] = i;
+		indices_array[i] = i + 1;
 		i++;
 	}
 	return (indices_array);

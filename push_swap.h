@@ -9,6 +9,7 @@
 typedef struct s_node
 {
 	struct s_node	*next;
+	
 	int		flag;
 	int		value;
 }				t_node;
@@ -17,11 +18,15 @@ typedef struct s_node
 typedef struct s_list
 {
 	struct s_node	*head;
-	int				size;
+	
+	int		size;
+	int		min;
 	
 	int		max;
-	int		min;
 	int		mid;
+	int		next;
+	int		flag;
+	
 		
 }				t_list;
 
@@ -41,6 +46,7 @@ t_node *get_last_elem(t_list *list);
 void add_front_list(t_list *list, t_node *elem);
 void add_back_list(t_list *list, t_node *elemr);
 void print_list(t_list *list);
+void print_list_in_line(t_list *list, int stack_flag);
 t_list *create_list_from_argv(int size, int *sort_ind_array);
 t_list *list_init(int size);
 int is_sort(t_list *list);

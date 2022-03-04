@@ -86,6 +86,26 @@ void print_list(t_list *list)
 	
 }
 
+void print_list_in_line(t_list *list, int stack_flag)
+{
+	t_node *temp;
+
+	temp = list->head;
+	if (stack_flag == 1)
+		printf("stack_A: ");
+	else if (stack_flag == 2)
+		printf("stack_B: ");
+	while (temp)
+	{
+		printf("%d ", temp->value);
+		temp = temp->next;
+	}
+	printf("[next: %d | ", list->next);
+	printf("size: %d]", list->size);
+	printf("\n");
+	
+}
+
 t_list *list_init(int size)
 {
 	t_list	*list;
@@ -112,6 +132,7 @@ t_list *create_list_from_argv(int size, int *sort_ind_array)
 	temp = list->head;
 	while (i < list->size)
 		add_back_list(list, create_elem(sort_ind_array[i++]));
+	list->next = 1;
 	return (list);
 }
 
