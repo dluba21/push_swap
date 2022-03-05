@@ -1,5 +1,6 @@
 #include "push_swap.h"
 
+//ya ne uzhel peremesheniye naverch kogda prihozhu k neotsortirovannomu kusku
 void find_minmax(t_list *list)
 {
 	t_node	*temp;
@@ -16,6 +17,25 @@ void find_minmax(t_list *list)
 		temp = temp->next;
 	}
 }
+
+void find_midmax_with_flag_zero(t_list *list)
+{
+	t_node	*temp;
+
+	temp = list->head;
+	list->max = temp->value;
+	list->min = temp->value;
+	while (temp && temp->flag == 0)
+	{
+		if (list->max < temp->value)
+			list->max = temp->value;
+		if (list->min > temp->value)
+			list->min = temp->value;
+		temp = temp->next;
+	}
+	list->mid = (list->max - list->next) / 2 + list->next;
+}
+
 
 //void tetra_sort(t_list *list_1, t_list *list_2, int stack_flag)
 //{
@@ -115,10 +135,103 @@ void first_step_general_sort(t_list *list_1, t_list *list_2)
 	}
 }
 
-//void init_lists_values_before_sort(t_list *list_1, t_list *list_2)
-//{
+void other_steps_part_stack_b(t_list *list_1, t_list *list_2) //can be inserted to first_step_sort
+{
+	int	i;
+
+	while (list_2->head != NULL)//operations with stack_b
+	{
+		find_minmax(list_2);
+		list_1->max = list_2->max;
+		list_1->mid = (list_1->max - list_1->next) / 2 + list_1->next;
+		list_1->flag++; //cause init mid in B one more time
+		
+		i = 0;
+		while (i < list_2->size)
+		{
+			if (list_2->head->value == list_1->next) //to optimize change order of 'if'
+			{
+				list_2->head->flag = list_1->flag;  //mb not need
+				pa_pb(list_1, list_2, 1); //pa and ra => sorted element
+				ra_rb(list_1, 1); //pa and ra => sorted element
+				list_1->next++;
+				continue;
+			}
+			else if (list_2->head->value > list_2->mid)
+			{
+				list_2->head->flag = list_1->flag;
+				pa_pb(list_1, list_2, 1); //pa
+				continue; //because after this will be i++, but size-- cause push
+			}
+
+			else
+				ra_rb(list_2, 2); //rb
+			i++;
+		}
+	}
+}
+
+void other_steps_general_sort(t_list *list_1, t_list *list_2)
+{
+	int	i = 0;
+	int	temp_flag;
+	
+	temp_flag = list_1->head->flag;
+	
+	if (list_1->head->flag == 0)
+	{
+		find_midmax_with_flag_zero(list_1);
+		while (list_1->head->flag == 0)
+			pa_pb(list_1, list_2, 2);
+		other_steps_part_stack_b(list_1, list_2);
+		return ;
+	}
+	while ((list_1->head->flag == temp_flag) && (list_1->head->flag > 0)) //mb > 0 not good
+	{
+		if (list_1->head->value == list_1->next) //zdes' tozhe mozhno dobavit 'ra', esli random==next!
+		{
+			ra_rb(list_1, 1); //tut kak raz i uchel
+			list_1->next++;
+			continue;
+		}
+		pa_pb(list_1, list_2, 2);
+	}
+	other_steps_part_stack_b(list_1, list_2);
+}
+
+
+////	while (list_2->size > 3) triple_sort, pb and ra (add it to optimize)
+//	//mb here not good conidition because there can be 2 or 1 size be left
+//	while (list_2->head)//repeat recursively while B not empty
+//	{
+//		list_1->max = list_1->mid;
+//		list_1->mid = (list_1->max - list_1->next) / 2 + list_1->next;
+//		list_1->flag++; //cause init mid in B one more time
 //
-//}
+//		i = 0;
+//		while (i < list_2->size)
+//		{
+//			if (list_2->head->value == list_1->next) //to optimize change order of 'if'
+//			{
+//				list_2->head->flag = list_1->flag;  //mb not need
+//				pa_pb(list_1, list_2, 1); //pa and ra => sorted element
+//				ra_rb(list_1, 1); //pa and ra => sorted element
+//				list_1->next++;
+//				continue;
+//			}
+//			else if (list_2->head->value > list_2->mid)
+//			{
+//				list_2->head->flag = list_1->flag;
+//				pa_pb(list_1, list_2, 1); //pa
+//				continue; //because after this will be i++, but size-- cause push
+//			}
+//
+//			else
+//				ra_rb(list_2, 2); //rb
+//			i++;
+//		}
+//	}
+
 
 void general_sort(t_list *list_1, t_list *list_2) //need init flags, next, size, etc
 {
@@ -129,14 +242,16 @@ void general_sort(t_list *list_1, t_list *list_2) //need init flags, next, size,
 //		triple_sort(list_1, 1);
 //		exit(0);
 //	}
-	if (is_sort(list_1) == 1)
+	if (is_sort(list_1) == 1) //replace to checking just after parsing
 		exit(0);
-		
 	first_step_general_sort(list_1, list_2);
-//	while (is_sort(list_1) == 0)
-//	{
-//
-//	}
+	print_list_and_flag(list_1);
+	printf("\n\nfirst step ends...\n\n\n");
+	while (is_sort(list_1) != 1)
+	{
+		other_steps_general_sort(list_1, list_2);
+	}
+	printf("the end! number of operations: %d\n", list_1->number_of_operations + list_2->number_of_operations);
 }
 
 
@@ -161,6 +276,7 @@ int main(int argc, char **argv)
 	print_list_in_line(list_2, 1);
 
 	general_sort(list_1, list_2);
+//	print_list_and_flag(list_1);
 	
 // pointers_check_start
 //	printf("%p\n", list->head);

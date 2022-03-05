@@ -9,6 +9,7 @@ t_node *create_elem(int value)
 	if (!new_elem)
 		return (0);
 	new_elem->value = value;
+	new_elem->flag = 0;
 	new_elem->next = NULL;
 	return (new_elem);
 }
@@ -86,6 +87,18 @@ void print_list(t_list *list)
 	
 }
 
+void print_list_and_flag(t_list *list)
+{
+	t_node *temp;
+
+	temp = list->head;
+	while (temp)
+	{
+		printf("%d [%d]\n", temp->value, temp->flag);
+		temp = temp->next;
+	}
+}
+
 void print_list_in_line(t_list *list, int stack_flag)
 {
 	t_node *temp;
@@ -118,6 +131,8 @@ t_list *list_init(int size)
 	}
 	list->head = NULL;
 	list->size = size;
+	
+	list->number_of_operations = 0; //just for check, delete it
 	return (list);
 }
 

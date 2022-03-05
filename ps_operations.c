@@ -92,6 +92,7 @@ void sa_sb(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 		printf("-sb\n");
 	
 	print_list_in_line(list, stack_flag);
+	list->number_of_operations++; //just for check, delete it
 }
 
 
@@ -103,6 +104,8 @@ void ss(t_list *list_1, t_list *list_2)
 	
 	print_list_in_line(list_1, 1);
 	print_list_in_line(list_2, 2);
+	
+	list_1->number_of_operations++; //just for check, delete it
 }
 
 void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'pb'
@@ -124,6 +127,8 @@ void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'p
 	
 	print_list_in_line(list_1, 1);
 	print_list_in_line(list_2, 2);
+	
+	list_1->number_of_operations++; //just for check, delete it
 }
 
 void ra_rb(t_list *list, int stack_flag)
@@ -135,6 +140,8 @@ void ra_rb(t_list *list, int stack_flag)
 		printf("-rb\n");
 	
 	print_list_in_line(list, stack_flag);
+	
+	list->number_of_operations++; //just for check, delete it
 }
 
 void rr(t_list *list_1, t_list *list_2)
@@ -145,6 +152,8 @@ void rr(t_list *list_1, t_list *list_2)
 	
 	print_list_in_line(list_1, 1);
 	print_list_in_line(list_2, 2);
+	
+	list_1->number_of_operations++; //just for check, delete it
 }
 
 void rra_rrb(t_list *list, int stack_flag)
@@ -156,6 +165,8 @@ void rra_rrb(t_list *list, int stack_flag)
 		printf("-rrb\n");
 	
 	print_list_in_line(list, stack_flag);
+	
+	list->number_of_operations++; //just for check, delete it
 }
 
 void rrr(t_list *list_1, t_list *list_2)
@@ -166,4 +177,6 @@ void rrr(t_list *list_1, t_list *list_2)
 	
 	print_list_in_line(list_1, 1);
 	print_list_in_line(list_2, 2);
+	
+	list_1->number_of_operations++; //just for check, delete it
 }

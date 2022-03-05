@@ -27,7 +27,8 @@ typedef struct s_list
 	int		next;
 	int		flag;
 	
-		
+	int		number_of_operations; //just for check, delete it
+	
 }				t_list;
 
 typedef struct	s_parse
@@ -46,6 +47,7 @@ t_node *get_last_elem(t_list *list);
 void add_front_list(t_list *list, t_node *elem);
 void add_back_list(t_list *list, t_node *elemr);
 void print_list(t_list *list);
+void print_list_and_flag(t_list *list);
 void print_list_in_line(t_list *list, int stack_flag);
 t_list *create_list_from_argv(int size, int *sort_ind_array);
 t_list *list_init(int size);
