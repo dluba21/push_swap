@@ -91,7 +91,7 @@ void sa_sb(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 	else
 		printf("-sb\n");
 	
-	print_list_in_line(list, stack_flag);
+	//_in_line(list, stack_flag);
 	list->number_of_operations++; //just for check, delete it
 }
 
@@ -102,8 +102,8 @@ void ss(t_list *list_1, t_list *list_2)
 	swap_one(list_2);
 	printf("-ss\n");
 	
-	print_list_in_line(list_1, 1);
-	print_list_in_line(list_2, 2);
+	//_in_line(list_1, 1);
+	//_in_line(list_2, 2);
 	
 	list_1->number_of_operations++; //just for check, delete it
 }
@@ -112,6 +112,10 @@ void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'p
 {
 	if (stack_flag == 1)
 	{
+		if (list_2->head->value == list_1->next)
+			list_2->head->flag = -1; // '-1' lishnee, vezde ubrat'
+		else
+			list_2->head->flag = list_1->flag; //flag prisvoit pri pushe
 		push(list_2, list_1);
 		list_1->size++;
 		list_2->size--;
@@ -125,8 +129,8 @@ void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'p
 		printf("-pb\n");
 	}
 	
-	print_list_in_line(list_1, 1);
-	print_list_in_line(list_2, 2);
+	//_in_line(list_1, 1);
+	//_in_line(list_2, 2);
 	
 	list_1->number_of_operations++; //just for check, delete it
 }
@@ -139,7 +143,7 @@ void ra_rb(t_list *list, int stack_flag)
 	else
 		printf("-rb\n");
 	
-	print_list_in_line(list, stack_flag);
+	//_in_line(list, stack_flag);
 	
 	list->number_of_operations++; //just for check, delete it
 }
@@ -150,8 +154,8 @@ void rr(t_list *list_1, t_list *list_2)
 	rotate_one(list_2);
 	printf("-rr\n");
 	
-	print_list_in_line(list_1, 1);
-	print_list_in_line(list_2, 2);
+	//_in_line(list_1, 1);
+	//_in_line(list_2, 2);
 	
 	list_1->number_of_operations++; //just for check, delete it
 }
@@ -164,7 +168,7 @@ void rra_rrb(t_list *list, int stack_flag)
 	else
 		printf("-rrb\n");
 	
-	print_list_in_line(list, stack_flag);
+	//_in_line(list, stack_flag);
 	
 	list->number_of_operations++; //just for check, delete it
 }
@@ -175,8 +179,8 @@ void rrr(t_list *list_1, t_list *list_2)
 	rev_rotate_one(list_2);
 	printf("-rrr\n");
 	
-	print_list_in_line(list_1, 1);
-	print_list_in_line(list_2, 2);
+	//_in_line(list_1, 1);
+	//_in_line(list_2, 2);
 	
 	list_1->number_of_operations++; //just for check, delete it
 }
