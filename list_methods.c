@@ -166,6 +166,6 @@ int is_sort(t_list *list)
 			return (0);
 		temp = temp->next;
 	}
-	printf("stack is sorted\n");
+//	printf("stack is sorted\n");
 	return (1);
 }

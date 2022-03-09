@@ -93,7 +93,7 @@ void first_step_general_sort(t_list *list_1, t_list *list_2)
 	list_1->mid = list_1->size / 2 + list_1->next; //size / 2 + 1
 	while (i < list_1->size)
 	{
-		if (list_1->head->value == list_1->next && j == 0) //ispravit' koroche chtoby bilo
+		if (list_1->head->value == list_1->next && j == 0) //ispravit', koroche chtoby bilo
 		{
 			list_1->head->flag = -1;
 			list_1->next++;
@@ -187,15 +187,22 @@ void other_steps_general_sort(t_list *list_1, t_list *list_2)
 {
 	int	temp_flag;
 	int	i;
+	static int flag_of_half = 1;
 	temp_flag = list_1->head->flag;
 	
 	i = 0;
 	if (list_1->head->flag == 0)
 	{
+		if (flag_of_half == 1)
+		{
+			list_1->number_of_operations_at_half = list_1->number_of_operations + list_2->number_of_operations;
+			flag_of_half = 0;
+		}
+		
 		find_midmax_with_flag_zero(list_1);
 		while (list_1->head->flag == 0)
 		{
-			//uchet blokirovki i next srazu
+			//uchet blokirovki
 			if ((list_1->head->value == list_1->next) && (i == 0)) //zdes' tozhe mozhno dobavit 'ra', esli random==next! sdealt funcioy otdelnuyy
 			{
 				list_1->head->flag = -1;
@@ -213,10 +220,14 @@ void other_steps_general_sort(t_list *list_1, t_list *list_2)
 		}
 		while (i > 0) //prokrutil obratno
 		{
-			rra_rrb(list_1, 1);
+			if (list_2->head->value != list_1->next && list_2->size >= 2)
+				rrr(list_1, list_2);
+			else
+				rra_rrb(list_1, 1);
 			i--;
 		}
 		other_steps_part_stack_b(list_1, list_2);
+		
 		return ;
 	}
 	while ((list_1->head->flag == temp_flag) && (list_1->head->flag > 0)) //mb > 0 not good
@@ -231,6 +242,8 @@ void other_steps_general_sort(t_list *list_1, t_list *list_2)
 		pa_pb(list_1, list_2, 2);
 	}
 	other_steps_part_stack_b(list_1, list_2);
+	print_list_and_flag(list_1);
+	printf("\n");
 }
 
 
@@ -280,7 +293,7 @@ void general_sort(t_list *list_1, t_list *list_2) //need init flags, next, size,
 		exit(0);
 	first_step_general_sort(list_1, list_2);
 	//_and_flag(list_1);
-	printf("\n\nfirst step ends...\n\n\n");
+//	printf("\n\nfirst step ends...\n\n\n");
 	while (is_sort(list_1) != 1)
 	{
 //		if (list_1->number_of_operations + list_2->number_of_operations > 50)
@@ -288,7 +301,9 @@ void general_sort(t_list *list_1, t_list *list_2) //need init flags, next, size,
 		other_steps_general_sort(list_1, list_2);
 		//_and_flag(list_1);
 	}
-	printf("the end! number of operations: %d\n", list_1->number_of_operations + list_2->number_of_operations);
+	printf("the end!\nnumber of operations at first_half: %d\n",  list_1->number_of_operations_at_half);
+	printf("and number at second_half: %d\n", list_1->number_of_operations + list_2->number_of_operations - list_1->number_of_operations_at_half);
+	printf("and summarized: %d\n", list_1->number_of_operations + list_2->number_of_operations);
 }
 
 

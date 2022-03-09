@@ -28,6 +28,7 @@ typedef struct s_list
 	int		flag;
 	
 	int		number_of_operations; //just for check, delete it
+	int		number_of_operations_at_half; //just for check, delete it
 	
 }				t_list;
 
