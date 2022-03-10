@@ -18,17 +18,11 @@ static void atoi_checker(char *str, int sign)
 	
 	mod = 0;
 	if (*str < '0' || *str > '9')
-	{
-		printf("atoi_error: not a letter\n");
-		exit (0);
-	}
+		print_error();
 	while (*str && *str >= '0' && *str <= '9')
 	{
 		if (mod * sign > 2147483647 || mod * sign < -2147483648)
-		{
-			printf("overflow\n");
-			exit (0);
-		}
+			print_error();
 		mod = mod * 10 + *str++ - '0';
 	}
 }
@@ -50,12 +44,5 @@ int	ft_atoi_ps(char *str)
 	atoi_checker(str, sign);
 	while (*str && *str >= '0' && *str <= '9')
 		mod = mod * 10 + *str++ - '0';
-//	printf("lol");
 	return (mod * sign);
 }
-
-//int main()
-//{
-//	t_errors error;
-//	printf("%d", ft_atoi("   a", &error));
-//}

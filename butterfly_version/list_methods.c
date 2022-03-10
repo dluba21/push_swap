@@ -47,10 +47,7 @@ t_node *get_last_elem(t_list *list)
 void add_front_list(t_list *list, t_node *elem)
 {
 	if (!list || !elem)
-	{
-		printf("add_front_lst error");
-		exit(0);
-	}
+		print_error();
 	elem->next = list->head;
 	list->head = elem;
 }
@@ -61,10 +58,7 @@ void add_back_list(t_list *list, t_node *elem)
 	t_node	*temp;
 	
 	if (!list || !elem)
-	{
-		printf("add_back_lst error\n");
-		exit(0);
-	}
+		print_error();
 	temp = get_last_elem(list);
 	if (!temp)
 	{
@@ -125,10 +119,7 @@ t_list *list_init(int size)
 
 	list = (t_list *)malloc(sizeof(t_list));
 	if (!list)
-	{
-		printf("init_lst error: malloc\n");
-		exit(0);
-	}
+		exit (0);
 	list->head = NULL;
 	list->size = size;
 	
@@ -168,6 +159,7 @@ t_list *create_list_from_argv(int size, int *sort_ind_array)
 	while (i < list->size)
 		add_back_list(list, create_elem(sort_ind_array[i++]));
 	list->next = 1;
+	free(sort_ind_array);
 	return (list);
 }
 
@@ -195,16 +187,13 @@ t_list *copy_list(t_list *list)
 	t_node	*temp_new_lst;
 
 	if (!list)
-	{
-		printf("error: can't copy");
 		exit(0);
-	}
 	temp_old_lst = list->head;
 	if (!temp_old_lst)
 		return (create_list(0));
 	new_list = create_list(list->size);
-//	if (!new_lst)
-//		exit(0);
+	if (!new_list)
+		exit(0);
 	temp_new_lst = new_list->head;
 	while (temp_old_lst != NULL)
 	{
@@ -232,11 +221,3 @@ int is_sort(t_list *list)
 	}
 	return (1);
 }
-
-//int main()
-//{
-//	t_list *list_1;
-//	t_list *list_2;
-//	
-//	list_1 = list_init(10);
-//}
