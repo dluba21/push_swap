@@ -66,7 +66,7 @@ void find_midmax_with_flag_zero(t_list *list)
 //
 //}
 
-void triple_sort(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
+int triple_sort(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 {
 	t_node	*temp;
 	
@@ -76,7 +76,7 @@ void triple_sort(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 		exit(0);
 	}
 	if (is_sort(list) == 1) //case 1 2 3
-		return ;
+		return (0);
 	temp = list->head; //mozhno dobitsa men'shih strok esli snachala sdelat stroki uslovno sortirovannimi (swap), a potom uzhe rabotat s tremya sluchayami)
 	find_minmax(list);
 	if (temp->value == list->max)
@@ -84,56 +84,94 @@ void triple_sort(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
 		if (temp->next->value == list->min) //case 3 1 2
 		{
 			ra_rb(list, stack_flag, 1);
-			return ;
+			return (0);
 		}
 		else //case 3 2 1
 		{
 			ra_rb(list, stack_flag, 1); //oshibka rra
 			sa_sb(list, stack_flag, 1);
-			return ;
+			return (0);
 		}
 	}
 	else if (temp->value == list->min) //case 1 3 2
 	{
 		sa_sb(list, stack_flag, 1);
 		ra_rb(list, stack_flag, 1);
-		return ;
+		return (0);
 	}
 	else if (temp->next->value == list->max) //case 2 3 1
 	{
 		rra_rrb(list, stack_flag, 1); //ohsibka rra
-		return ;
+		return (0);
 	}
 	//else{
 	sa_sb(list, stack_flag, 1); //case 2 1 3
+	return (0);
 //	return;}
+}
+
+void get_elem_on_top(t_list *list, int value, int show_flag)
+{
+	while (list->head->value != value)
+	{
+		if (get_position_of_elem(list, value) <= list->size / 2 + list->size % 2)
+			ra_rb(list, 1, show_flag);
+		else
+			rra_rrb(list, 1, show_flag);
+	}
+}
+
+int five_sort_best_strategy(t_list *list_a)
+{
+	int		operations_1;
+	int		operations_2;
+	t_list	*list_1;
+	t_list	*list_2;
+
+	list_1 = copy_list(list_a);
+	list_2 = list_init(0);
+	get_elem_on_top(list_1, 1, 0);
+	pa_pb(list_1, list_2, 2, 0);
+	get_elem_on_top(list_1, 2, 0);
+	operations_1 = list_1->number_of_operations;
+	free_list(list_1);
+	list_1 = copy_list(list_a);
+	get_elem_on_top(list_1, 2, 0);
+	pa_pb(list_1, list_2, 2, 0);
+	get_elem_on_top(list_1, 1, 0);
+	operations_2 = list_1->number_of_operations;
+	free_list(list_1);
+	free_list(list_2);
+	printf("operation_1 = %d\toperation_1 = %d\n", operations_1, operations_2 + 1);
+	if (operations_1 <= operations_2 + 1)
+		return (0);
+	return (1);
 }
 
 void five_sort(t_list *list_1, t_list *list_2)
 {
-	while (list_1->head->value != 5)
+	if (five_sort_best_strategy(list_1) == 0)
 	{
-		if (get_position_of_elem(list_1, 5) <= 3)
-			ra_rb(list_1, 1, 1);
-		else
-			rra_rrb(list_1, 1, 1);
+		get_elem_on_top(list_1, 1, 1);
+		pa_pb(list_1, list_2, 2, 1);
+		get_elem_on_top(list_1, 2, 1);
+		pa_pb(list_1, list_2, 2, 1);
 	}
-	pa_pb(list_1, list_2, 2, 1);
-	while (list_1->head->value != 4)
+	else
 	{
-		if (get_position_of_elem(list_1, 4) <= 2)
-			ra_rb(list_1, 1, 1);
-		else
-			rra_rrb(list_1, 1, 1);
+		get_elem_on_top(list_1, 2, 1);
+		pa_pb(list_1, list_2, 2, 1);
+		get_elem_on_top(list_1, 1, 1);
+		pa_pb(list_1, list_2, 2, 1);
+		sa_sb(list_2, 2, 1);
 	}
-	pa_pb(list_1, list_2, 2, 1);
 	triple_sort(list_1, 1);
+	pa_pb(list_1, list_2, 1, 1);;
 	pa_pb(list_1, list_2, 1, 1);
-	ra_rb(list_1, 1, 1);
-	pa_pb(list_1, list_2, 1, 1);
-	ra_rb(list_1, 1, 1);
 	exit(0);
 }
+
+//find_min_sort
 
 void four_sort(t_list *list_1, t_list *list_2)
 {
