@@ -83,24 +83,29 @@ void rev_rotate_one(t_list *list)
 
 
 
-void sa_sb(t_list *list, int stack_flag) // 1 = stack_a, 2 = stack_b
+void sa_sb(t_list *list, int stack_flag, int show_flag) // 1 = stack_a, 2 = stack_b
 {
 	swap_one(list);
-	if (stack_flag == 1)
-		printf("sa\n");
-	else
-		printf("sb\n");
+	if (show_flag == 1)
+	{
+		if (stack_flag == 1)
+			printf("sa\n");
+		else
+			printf("sb\n");
+	}
+	
 	
 	//_in_line(list, stack_flag);
 	list->number_of_operations++; //just for check, delete it
 }
 
 
-void ss(t_list *list_1, t_list *list_2)
+void ss(t_list *list_1, t_list *list_2, int show_flag)
 {
 	swap_one(list_1);
 	swap_one(list_2);
-	printf("ss\n");
+	if (show_flag == 1)
+		printf("ss\n");
 	
 	//_in_line(list_1, 1);
 	//_in_line(list_2, 2);
@@ -108,7 +113,7 @@ void ss(t_list *list_1, t_list *list_2)
 	list_1->number_of_operations++; //just for check, delete it
 }
 
-void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'pb'
+void pa_pb(t_list *list_1, t_list *list_2, int stack_flag, int show_flag) //'1' = 'pa';'2' = 'pb'
 {
 	if (stack_flag == 1)
 	{
@@ -119,14 +124,16 @@ void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'p
 		push(list_2, list_1);
 		list_1->size++;
 		list_2->size--;
-		printf("pa\n");
+		if (show_flag == 1)
+			printf("pa\n");
 	}
 	else
 	{
 		list_1->size--;
 		list_2->size++;
 		push(list_1, list_2);
-		printf("pb\n");
+		if (show_flag == 1)
+			printf("pb\n");
 	}
 	
 	//_in_line(list_1, 1);
@@ -135,24 +142,27 @@ void pa_pb(t_list *list_1, t_list *list_2, int stack_flag) //'1' = 'pa';'2' = 'p
 	list_1->number_of_operations++; //just for check, delete it
 }
 
-void ra_rb(t_list *list, int stack_flag)
+void ra_rb(t_list *list, int stack_flag, int show_flag)
 {
 	rotate_one(list);
-	if (stack_flag == 1)
-		printf("ra\n");
-	else
-		printf("rb\n");
-	
+	if (show_flag == 1)
+	{
+		if (stack_flag == 1)
+			printf("ra\n");
+		else
+			printf("rb\n");
+	}
 	//_in_line(list, stack_flag);
 	
 	list->number_of_operations++; //just for check, delete it
 }
 
-void rr(t_list *list_1, t_list *list_2)
+void rr(t_list *list_1, t_list *list_2, int show_flag)
 {
 	rotate_one(list_1);
 	rotate_one(list_2);
-	printf("rr\n");
+	if (show_flag == 1)
+		printf("rr\n");
 	
 	//_in_line(list_1, 1);
 	//_in_line(list_2, 2);
@@ -160,24 +170,27 @@ void rr(t_list *list_1, t_list *list_2)
 	list_1->number_of_operations++; //just for check, delete it
 }
 
-void rra_rrb(t_list *list, int stack_flag)
+void rra_rrb(t_list *list, int stack_flag, int show_flag)
 {
 	rev_rotate_one(list);
-	if (stack_flag == 1)
-		printf("rra\n");
-	else
-		printf("rrb\n");
-	
+	if (show_flag == 1)
+	{
+		if (stack_flag == 1)
+			printf("rra\n");
+		else
+			printf("rrb\n");
+	}
 	//_in_line(list, stack_flag);
 	
 	list->number_of_operations++; //just for check, delete it
 }
 
-void rrr(t_list *list_1, t_list *list_2)
+void rrr(t_list *list_1, t_list *list_2, int show_flag)
 {
 	rev_rotate_one(list_1);
 	rev_rotate_one(list_2);
-	printf("rrr\n");
+	if (show_flag == 1)
+		printf("rrr\n");
 	
 	//_in_line(list_1, 1);
 	//_in_line(list_2, 2);

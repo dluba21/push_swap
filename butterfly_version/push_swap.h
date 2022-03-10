@@ -5,7 +5,7 @@
 # include <stdlib.h>
 # include <time.h>
 # include "libft/libft.h"
-#define UPPER_ITER_LIMIT 50
+
 
 typedef struct s_node
 {
@@ -28,7 +28,7 @@ typedef struct s_list
 	int		next;
 	int		flag;
 	
-	int		number_of_operations; //just for check, delete it
+	int		number_of_operations;
 	
 }				t_list;
 
@@ -52,6 +52,9 @@ void print_list_and_flag(t_list *list);
 void print_list_in_line(t_list *list, int stack_flag);
 t_list *create_list_from_argv(int size, int *sort_ind_array);
 t_list *list_init(int size);
+t_list *create_list(int size);
+void free_list(t_list *list);
+t_list *copy_list(t_list *list);
 int is_sort(t_list *list);
 
 void swap_one(t_list *list);
@@ -71,13 +74,13 @@ void rev_rotate_one(t_list *list);
 //void rrb(t_list *list);
 //void rrr(t_list *list_a, t_list *list_b);
 
-void sa_sb(t_list *list, int stack_flag);
-void ss(t_list *list_1, t_list *list_2);
-void pa_pb(t_list *list_a, t_list *list_b, int stack_flag);
-void ra_rb(t_list *list, int stack_flag);
-void rr(t_list *list_a, t_list *list_b);
-void rra_rrb(t_list *list, int stack_flag);
-void rrr(t_list *list_a, t_list *list_b);
+void sa_sb(t_list *list, int stack_flag, int show_flag);
+void ss(t_list *list_1, t_list *list_2, int show_flag);
+void pa_pb(t_list *list_a, t_list *list_b, int stack_flag, int show_flag);
+void ra_rb(t_list *list, int stack_flag, int show_flag);
+void rr(t_list *list_a, t_list *list_b, int show_flag);
+void rra_rrb(t_list *list, int stack_flag, int show_flag);
+void rrr(t_list *list_a, t_list *list_b, int show_flag);
 
 
 int	ft_atoi_ps(char *str);
