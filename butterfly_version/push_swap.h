@@ -4,6 +4,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 
 
 typedef struct s_node
@@ -88,6 +89,14 @@ void	bubble_sort_end(t_parse *parse, int ind_array_flag, int	*second_array);
 void	bubble_sort_array(t_parse *parse, int ind_array_flag);
 void	big_array_creator(t_parse *parse);
 void	num_array_dealer(int argc, char **argv, t_parse *parse);
+
+void	print_ok(void);
+void	print_ko(void);
+int	ft_strcmp(char *str_1, char *str_2);
+void	check_is_sort_at_end(t_list *list_1, t_list *list_2);
+void	do_command(t_list *list_1, t_list *list_2, int command);
+int	choose_command(char *str);
+int	command_parser(void);
 
 
 #endif
