@@ -3,7 +3,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <time.h>
 # include "libft/libft.h"
 
 
@@ -45,14 +44,14 @@ void less_six_sort(t_list *list_1, t_list *list_2);
 void	first_step_of_sort(t_list *list_1, t_list *list_2, \
 							int upper_iter_limit, int show_flag);
 void	second_step_of_sort(t_list *list_1, t_list *list_2, int show_flag);
-int	get_best_lim_part(t_list *list_a, t_list *list_b, int upper_iter_limit);
-int	get_optimal_limit(t_list *list_a, t_list *list_b);
+int	get_optimal_lim_part(t_list *list_a, int upper_iter_limit);
+int	get_optimal_limit(t_list *list_a);
 void	general_sort(t_list *list_1, t_list *list_2);
 
-static void	swap_one(t_list *list);
-static void	push(t_list *list_src, t_list *list_dest);
-static void	rotate_one(t_list *list);
-static void	rev_rotate_one(t_list *list);
+void	swap_one(t_list *list);
+void	push(t_list *list_src, t_list *list_dest);
+void	rotate_one(t_list *list);
+void	rev_rotate_one(t_list *list);
 void	sa_sb(t_list *list, int stack_flag, int show_flag);
 void	ss(t_list *list_1, t_list *list_2, int show_flag);
 void	pa_pb(t_list *list_1, t_list *list_2, int stack_flag, int show_flag);
@@ -61,7 +60,7 @@ void	rr(t_list *list_1, t_list *list_2, int show_flag);
 void	rra_rrb(t_list *list, int stack_flag, int show_flag);
 void	rrr(t_list *list_1, t_list *list_2, int show_flag);
 
-static void	atoi_checker(char *str, int sign);
+void	atoi_checker(char *str, int sign);
 int	ft_atoi_ps(char *str);
 
 t_node	*create_elem(int value);

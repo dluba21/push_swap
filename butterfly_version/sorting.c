@@ -72,7 +72,6 @@ int	is_nearly_sort(t_list *list)
 
 void	triple_sort(t_list *list, int stack_flag)
 {
-	t_node	*temp;
 	int		min;
 	int		max;
 
@@ -234,7 +233,7 @@ void	second_step_of_sort(t_list *list_1, t_list *list_2, int show_flag)
 	}
 }
 
-int	get_best_lim_part(t_list *list_a, t_list *list_b, int upper_iter_limit)
+int	get_optimal_lim_part(t_list *list_a, int upper_iter_limit)
 {
 	t_list	*list_1;
 	t_list	*list_2;
@@ -252,7 +251,7 @@ int	get_best_lim_part(t_list *list_a, t_list *list_b, int upper_iter_limit)
 	return (oper_numb);
 }
 
-int	get_optimal_limit(t_list *list_a, t_list *list_b)
+int	get_optimal_limit(t_list *list_a)
 {
 	int	upper_limit;
 	int	current_operations;
@@ -264,7 +263,7 @@ int	get_optimal_limit(t_list *list_a, t_list *list_b)
 	min_upper_limit = 1;
 	while (upper_limit < 60)
 	{
-		current_operations = get_best_lim_part(list_a, list_b, upper_limit);
+		current_operations = get_optimal_lim_part(list_a, upper_limit);
 		if (min_operations > current_operations)
 		{
 			min_operations = current_operations;
@@ -282,7 +281,7 @@ void	general_sort(t_list *list_1, t_list *list_2)
 	if (is_sort(list_1) == 1)
 		exit(0);
 	less_six_sort(list_1, list_2);
-	optimal_limit = get_optimal_limit(list_1, list_2);
+	optimal_limit = get_optimal_limit(list_1);
 	first_step_of_sort(list_1, list_2, optimal_limit, 1);
 	second_step_of_sort(list_1, list_2, 1);
 	exit(0);
@@ -292,7 +291,6 @@ int	main(int argc, char **argv)
 {
 	t_list	*list_1;
 	t_list	*list_2;
-	t_node	*temp;
 	t_parse	parse;
 
 	if (argc == 1)

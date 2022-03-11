@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	atoi_checker(char *str, int sign)
+void	atoi_checker(char *str, int sign)
 {
 	long	mod;
 

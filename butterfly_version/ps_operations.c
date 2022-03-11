@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-static void	swap_one(t_list *list)
+void	swap_one(t_list *list)
 {
 	t_node	*temp_1;
 	t_node	*temp_2;
@@ -14,7 +14,7 @@ static void	swap_one(t_list *list)
 	list->head = temp_1;
 }
 
-static void	push(t_list *list_src, t_list *list_dest)
+void	push(t_list *list_src, t_list *list_dest)
 {
 	t_node	*temp_1;
 	t_node	*temp_2;
@@ -28,7 +28,7 @@ static void	push(t_list *list_src, t_list *list_dest)
 	list_src->head = temp_2;
 }
 
-static void	rotate_one(t_list *list)
+void	rotate_one(t_list *list)
 {
 	t_node	*temp;
 	t_node	*elem;
@@ -42,7 +42,7 @@ static void	rotate_one(t_list *list)
 	list->head = temp;
 }
 
-static void	rev_rotate_one(t_list *list)
+void	rev_rotate_one(t_list *list)
 {
 	t_node	*temp;
 	t_node	*elem;
