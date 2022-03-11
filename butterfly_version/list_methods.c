@@ -1,7 +1,6 @@
 #include "push_swap.h"
 
-
-t_node *create_elem(int value)
+t_node	*create_elem(int value)
 {
 	t_node	*new_elem;
 
@@ -9,14 +8,13 @@ t_node *create_elem(int value)
 	if (!new_elem)
 		return (0);
 	new_elem->value = value;
-	new_elem->flag = 0;
 	new_elem->next = NULL;
 	return (new_elem);
 }
 
-int list_length(t_list *list)
+int	list_length(t_list *list)
 {
-	t_node *temp;
+	t_node	*temp;
 	int		i;
 
 	if (!list || !list->head)
@@ -29,12 +27,11 @@ int list_length(t_list *list)
 		i++;
 	}
 	return (i);
-	
 }
 
-t_node *get_last_elem(t_list *list)
+t_node	*get_last_elem(t_list *list)
 {
-	t_node *temp;
+	t_node	*temp;
 
 	if (!list || !list->head)
 		return (NULL);
@@ -44,7 +41,7 @@ t_node *get_last_elem(t_list *list)
 	return (temp);
 }
 
-void add_front_list(t_list *list, t_node *elem)
+void	add_front_list(t_list *list, t_node *elem)
 {
 	if (!list || !elem)
 		print_error();
@@ -52,11 +49,10 @@ void add_front_list(t_list *list, t_node *elem)
 	list->head = elem;
 }
 
-
-void add_back_list(t_list *list, t_node *elem)
+void	add_back_list(t_list *list, t_node *elem)
 {
 	t_node	*temp;
-	
+
 	if (!list || !elem)
 		print_error();
 	temp = get_last_elem(list);
@@ -68,9 +64,9 @@ void add_back_list(t_list *list, t_node *elem)
 	temp->next = elem;
 }
 
-void print_list(t_list *list)
+void	print_list(t_list *list)
 {
-	t_node *temp;
+	t_node	*temp;
 
 	temp = list->head;
 	while (temp)
@@ -78,42 +74,9 @@ void print_list(t_list *list)
 		printf("%d\n", temp->value);
 		temp = temp->next;
 	}
-	
 }
 
-void print_list_and_flag(t_list *list)
-{
-	t_node *temp;
-
-	temp = list->head;
-	while (temp)
-	{
-		printf("%d [%d]\n", temp->value, temp->flag);
-		temp = temp->next;
-	}
-}
-
-void print_list_in_line(t_list *list, int stack_flag)
-{
-	t_node *temp;
-
-	temp = list->head;
-	if (stack_flag == 1)
-		printf("stack_A: ");
-	else if (stack_flag == 2)
-		printf("stack_B: ");
-	while (temp)
-	{
-		printf("%d ", temp->value);
-		temp = temp->next;
-	}
-	printf("[next: %d | ", list->next);
-	printf("size: %d]", list->size);
-	printf("\n");
-	
-}
-
-t_list *list_init(int size)
+t_list	*list_init(int size)
 {
 	t_list	*list;
 
@@ -122,12 +85,11 @@ t_list *list_init(int size)
 		exit (0);
 	list->head = NULL;
 	list->size = size;
-	
-	list->number_of_operations = 0; //just for check, delete it
+	list->number_of_operations = 0;
 	return (list);
 }
 
-t_list *create_list(int size)
+t_list	*create_list(int size)
 {
 	t_node	*temp;
 	t_list	*list;
@@ -142,12 +104,10 @@ t_list *create_list(int size)
 		add_back_list(list, create_elem(0));
 		i++;
 	}
-	list->next = 1;
 	return (list);
 }
 
-
-t_list *create_list_from_argv(int size, int *sort_ind_array)
+t_list	*create_list_from_argv(int size, int *sort_ind_array)
 {
 	t_node	*temp;
 	t_list	*list;
@@ -158,12 +118,11 @@ t_list *create_list_from_argv(int size, int *sort_ind_array)
 	temp = list->head;
 	while (i < list->size)
 		add_back_list(list, create_elem(sort_ind_array[i++]));
-	list->next = 1;
 	free(sort_ind_array);
 	return (list);
 }
 
-void free_list(t_list *list)
+void	free_list(t_list *list)
 {
 	t_list	*temp_list;
 	t_node	*temp_node;
@@ -180,7 +139,7 @@ void free_list(t_list *list)
 	free(temp_list);
 }
 
-t_list *copy_list(t_list *list)
+t_list	*copy_list(t_list *list)
 {
 	t_list	*new_list;
 	t_node	*temp_old_lst;
@@ -204,7 +163,7 @@ t_list *copy_list(t_list *list)
 	return (new_list);
 }
 
-int is_sort(t_list *list)
+int	is_sort(t_list *list)
 {
 	t_node	*temp;
 

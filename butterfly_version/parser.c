@@ -1,14 +1,14 @@
 #include "push_swap.h"
 
-void print_error(void)
+void	print_error(void)
 {
 	write(1, "Error\n", 6);
 	exit(0);
 }
 
-void big_char_str_free(char **big_str)
+void	big_char_str_free(char **big_str)
 {
-	char **temp_big_str;
+	char	**temp_big_str;
 
 	temp_big_str = big_str;
 	while (*big_str)
@@ -16,7 +16,7 @@ void big_char_str_free(char **big_str)
 	free(temp_big_str);
 }
 
-int word_counter(char **big_str)
+int	word_counter(char **big_str)
 {
 	int	i;
 
@@ -37,10 +37,10 @@ void	swap_sort(int *a, int *b)
 	*b = temp;
 }
 
-int *indices_array_creator(int size_array)
+int	*indices_array_creator(int size_array)
 {
 	int	i;
-	int *indices_array;
+	int	*indices_array;
 
 	i = 0;
 	indices_array = (int *)malloc(sizeof(int) * size_array);
@@ -54,11 +54,11 @@ int *indices_array_creator(int size_array)
 	return (indices_array);
 }
 
-void dublicate_check(t_parse *parse)
+void	dublicate_check(t_parse *parse)
 {
 	int	i;
-	int counter;
-	int c;
+	int	counter;
+	int	c;
 
 	i = 0;
 	counter = -1;
@@ -78,18 +78,30 @@ void dublicate_check(t_parse *parse)
 	}
 }
 
+int	*bubble_sort_start(t_parse *parse, int ind_array_flag)
+{
+	if (ind_array_flag == 0)
+		return (parse->big_array);
+	else
+		return (parse->ind_array);
+}
 
-void quick_sort_array(t_parse *parse, int ind_array_flag) //replace bubble_sort to quick_sort
+void	bubble_sort_end(t_parse *parse, int ind_array_flag, int	*second_array)
+{
+	if (ind_array_flag == 0)
+		parse->ind_array = second_array;
+	if (ind_array_flag == 1)
+		parse->sort_ind_array = second_array;
+}
+
+void	bubble_sort_array(t_parse *parse, int ind_array_flag)
 {
 	int	i;
 	int	j;
-	int *first_array;
-	int *second_array;
+	int	*first_array;
+	int	*second_array;
 
-	if (ind_array_flag == 0)
-		first_array = parse->big_array;
-	if (ind_array_flag == 1)
-		first_array = parse->ind_array;
+	first_array = bubble_sort_start(parse, ind_array_flag);
 	second_array = indices_array_creator(parse->size_array);
 	i = 0;
 	while (i < parse->size_array)
@@ -97,7 +109,7 @@ void quick_sort_array(t_parse *parse, int ind_array_flag) //replace bubble_sort 
 		j = 0;
 		while (j < parse->size_array - i - 1)
 		{
-			if (first_array[j] > first_array[j + 1]) //nuzhno urezat'
+			if (first_array[j] > first_array[j + 1])
 			{
 				swap_sort(&first_array[j], &first_array[j + 1]);
 				swap_sort(&second_array[j], &second_array[j + 1]);
@@ -106,13 +118,10 @@ void quick_sort_array(t_parse *parse, int ind_array_flag) //replace bubble_sort 
 		}
 		i++;
 	}
-	if (ind_array_flag == 0)
-		parse->ind_array = second_array;
-	if (ind_array_flag == 1)
-		parse->sort_ind_array = second_array;
+	bubble_sort_end(parse, ind_array_flag, second_array);
 }
 
-void big_array_creator(t_parse *parse)
+void	big_array_creator(t_parse *parse)
 {
 	int	i;
 
@@ -125,12 +134,12 @@ void big_array_creator(t_parse *parse)
 		parse->big_array[i] = ft_atoi_ps(parse->big_str[i]);
 		i++;
 	}
-	quick_sort_array(parse, 0); // flag = 0 is for initilizing first array; flag = 1 is for the second step and init second ind_arr;
-	dublicate_check(parse); //nado free massive moduley i perviy massive indexov
-	quick_sort_array(parse, 1); //second array of indices that will be in list,(stoit li dobavlyat '1', chtobi s nulya nachalo bilo?)
+	bubble_sort_array(parse, 0);
+	dublicate_check(parse);
+	bubble_sort_array(parse, 1);
 }
 
-void num_array_dealer(int argc, char **argv, t_parse *parse)
+void	num_array_dealer(int argc, char **argv, t_parse *parse)
 {
 	int		i;
 	char	*long_str;
@@ -144,7 +153,7 @@ void num_array_dealer(int argc, char **argv, t_parse *parse)
 		temp = long_str;
 		long_str = ft_strjoin(long_str, argv[i++]);
 		free(temp);
-		temp_to_free_str =  ft_strdup(" ");
+		temp_to_free_str = ft_strdup(" ");
 		temp = long_str;
 		long_str = ft_strjoin(long_str, temp_to_free_str);
 		free(temp);
@@ -158,4 +167,3 @@ void num_array_dealer(int argc, char **argv, t_parse *parse)
 	free(parse->big_array);
 	free(parse->ind_array);
 }
-

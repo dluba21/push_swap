@@ -12,10 +12,10 @@
 
 #include "push_swap.h"
 
-static void atoi_checker(char *str, int sign)
+static void	atoi_checker(char *str, int sign)
 {
 	long	mod;
-	
+
 	mod = 0;
 	if (*str < '0' || *str > '9')
 		print_error();
