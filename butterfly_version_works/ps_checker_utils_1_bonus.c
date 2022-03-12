@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stdio.h>
 
 void	do_command(t_list *list_1, t_list *list_2, int command)
 {
@@ -86,6 +87,8 @@ int	main(int argc, char **argv)
 	t_parse	parse;
 
 	if (argc == 1)
+		print_result("\n");
+	if (first_arg_parser(argv[1]) && argc == 2)
 		print_error();
 	num_array_dealer(argc, argv, &parse);
 	list_1 = create_list_from_argv(parse.size_array, parse.sort_ind_array);

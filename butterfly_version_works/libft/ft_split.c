@@ -24,7 +24,7 @@ static size_t	word_counter(char const *str, char c)
 	while (i < ft_strlen(str))
 	{
 		start = i;
-		while (i < ft_strlen(str) && str[i] != c)
+		while (i < ft_strlen(str) && str[i] != c && str[i] != '\t')
 			i++;
 		end = i;
 		if (end - start > 0)
@@ -57,7 +57,7 @@ static char	**big_str_creator(char const *s, char c, char **big)
 	while (i < ft_strlen(s))
 	{
 		start = i;
-		while (i < ft_strlen(s) && s[i] != c)
+		while (i < ft_strlen(s) && s[i] != c && s[i] != '\t')
 			i++;
 		end = i;
 		if (end - start > 0)

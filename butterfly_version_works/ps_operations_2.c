@@ -73,6 +73,6 @@ void	rr(t_list *list_1, t_list *list_2, int show_flag)
 	rotate_one(list_1);
 	rotate_one(list_2);
 	if (show_flag == 1)
-		printf("rr\n");
+		write(1, "rr\n", 3);
 	list_1->number_of_operations++;
 }

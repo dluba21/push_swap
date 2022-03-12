@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ps_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dluba <dluba@student.42.fr>                +#+  +:+       +#+        */
+/*   By: anrdeysuvorov <anrdeysuvorov@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 14:16:23 by dluba             #+#    #+#             */
-/*   Updated: 2021/10/17 14:38:39 by dluba            ###   ########.fr       */
+/*   Updated: 2022/03/12 03:43:37 by anrdeysuvor      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	atoi_checker(char *str, int sign)
 			print_error();
 		mod = mod * 10 + *str++ - '0';
 	}
+	if (mod * sign > 2147483647 || mod * sign < -2147483648)
+		print_error();
 }
 
 int	ft_atoi_ps(char *str)
@@ -44,5 +46,7 @@ int	ft_atoi_ps(char *str)
 	atoi_checker(str, sign);
 	while (*str && *str >= '0' && *str <= '9')
 		mod = mod * 10 + *str++ - '0';
+	if (*str != 0 && !(*str >= '0' && *str <= '9'))
+		print_error();
 	return (mod * sign);
 }
